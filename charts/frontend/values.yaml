@@ -1,0 +1,60 @@
+###
+# Generic configuration
+###
+version: master
+workload_enabled: true
+config_enabled: true
+global_service_enabled: false
+
+###
+# Workload configuration
+###
+image: gcr.io/PROJECT/frontend
+imagePullPolicy: IfNotPresent
+
+service:
+  global: false
+  type: LoadBalancer
+  port_name: http
+  port: 8080
+  container_port: 8080
+  liveness_path: /actuator/health
+  readiness_path: /actuator/health
+  prometheus: /actuator/prometheus
+
+###
+# Istio configuration
+###
+destinationrule:
+  domain: svc.cluster.local    
+virtualservice:
+  enabled: false
+
+###
+# Application environment
+###
+env:
+  LOGGING_LEVEL_ROOT: info
+  SPRING_CONFIG_LOCATION: "/run/config/application.yml"
+###
+# Application configuration file
+###
+config:
+  backend: "http://backend-master:8080"
+  spring:
+      application:
+          name: frontend.Application
+      sleuth:
+          sampler:
+              probability: 1
+  management:
+      endpoint:
+          metrics:
+              enabled: true
+          prometheus:
+              enabled: true
+      endpoints:
+          web:
+              exposure:
+                  include: health,info,metrics,prometheus
+  

@@ -1,0 +1,3 @@
+routing_canary.yaml
+*.tmp
+*.lock

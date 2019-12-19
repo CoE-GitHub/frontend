@@ -1,0 +1,4 @@
+dependencies:
+    - name: libchart
+      version: 0.0.1
+      repository: https://raw.githubusercontent.com/CoE-GitHub/libchart/master

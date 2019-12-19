@@ -1,0 +1,25 @@
+{{ if .Values.workload_enabled  }}
+---
+{{ template "common.deployment" (list . "chart.deployment") -}}
+{{ end }}
+{{- define "chart.deployment" -}}
+spec:
+  template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: {{ .Values.service.path  }}
+        prometheus.io/path: {{ .Values.service.prometheus  }}
+    spec:
+      containers:
+      - {{ template "common.container_probes" (list . "chart.deployment.container_probes") }}
+      - {{ template "common.container" (list . "chart.deployment.container") }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "common.fullname" . }}
+{{ end }}
+{{- define "chart.deployment.container" -}}
+{{ end }}
+{{- define "chart.deployment.container_probes" -}}
+{{ end }}

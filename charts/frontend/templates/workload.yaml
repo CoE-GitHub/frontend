@@ -1,0 +1,45 @@
+
+{{- /*
+# This is a an example how standartized workload objects
+# can be created. This example shows that values of the chart
+# will define what objects will be created.
+# No value overrides are made here.
+# The point is that this file might be the same 
+# across multiple charts.
+*/ -}}
+{{ if .Values.workload_enabled  }}
+---
+{{ template "common.service" (list . "chart.service") -}}
+{{ end }}
+{{- define "chart.service" -}}
+{{ end }}
+{{ if .Values.workload_enabled  }}
+---
+{{ template "common.pdb" (list . "chart.pdb") -}}
+{{ end }}
+{{- define "chart.pdb" -}}
+{{ end }}
+{{ if .Values.workload_enabled  }}
+---
+{{ template "common.virtualservice" (list . "chart.virtualservice") -}}
+{{ end }}
+{{- define "chart.virtualservice" -}}
+{{ end }}
+{{ if .Values.workload_enabled  }}
+---
+{{ template "common.destinationrule" (list . "chart.destinationrule") -}}
+{{ end }}
+{{- define "chart.destinationrule" -}}
+{{ end }}
+{{ if .Values.global_service_enabled }}
+---
+{{ template "common.service_global" (list . "chart.service_global") -}}
+{{ end }}
+{{- define "chart.service_global" -}}
+{{ end }}
+{{ if .Values.global_service_enabled }}
+---
+{{ template "common.virtualservice_global" (list . "chart.virtualservice_global") -}}
+{{ end }}
+{{- define "chart.virtualservice_global" -}}
+{{ end }}

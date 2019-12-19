@@ -1,0 +1,17 @@
+backend: http://backend:8080
+spring:
+    application:
+        name: frontend
+    sleuth:
+        sampler:
+            probability: 1
+management:
+    endpoint:
+        metrics:
+            enabled: true
+        prometheus:
+            enabled: true
+    endpoints:
+        web:
+            exposure:
+                include: health,info,metrics,prometheus

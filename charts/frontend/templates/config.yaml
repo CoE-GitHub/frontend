@@ -1,0 +1,13 @@
+###
+# Configuration options template
+###
+{{ if .Values.config_enabled }}
+---
+{{- template "common.configmap" (list . "chart.configmap") -}}
+{{ end }}
+{{- define "chart.configmap" -}}
+data:
+  application.yml: |
+{{ toYaml .Values.config | indent 20 }}
+{{ toYaml .Values.env | indent 2 }}
+{{ end }}
